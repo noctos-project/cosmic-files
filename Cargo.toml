@@ -176,6 +176,9 @@ tokio = { version = "1", features = ["rt", "macros"] }
 # smithay-clipboard = { path = "../smithay-clipboard" }
 
 [patch.crates-io]
+# NoctOS: fork 0.11.0 with its posix_spawn flag constants widened; they are
+# c_short on illumos and the crate assumes c_int.
+fork = { path = "noctos-vendor/fork" }
 # NoctOS: notify with a native illumos backend (event ports), so that
 # config-file changes are noticed as they are on Linux.
 notify = { path = "../cosmic-comp/noctos-vendor/notify" }
@@ -236,6 +239,7 @@ iced_winit = { path = "../libcosmic/iced/winit" }
 
 [workspace]
 members = ["cosmic-files-applet", "cosmic-files-thumbnailer"]
+exclude = ["noctos-vendor"]
 
 [workspace.dependencies]
 image = "0.25"

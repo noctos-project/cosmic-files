@@ -103,8 +103,13 @@ const fn spawn_flags() -> libc::c_int {
 /// The helper has closed every descriptor but its close-on-exec socket, so
 /// `true` inherits nothing even without Apple's `CLOEXEC_DEFAULT`.
 #[cfg(not(target_vendor = "apple"))]
+// The flag constants are `c_short` on illumos and Solaris and `c_int`
+// elsewhere; widen each one so the same expression serves both.
+#[allow(clippy::unnecessary_cast)]
 const fn spawn_flags() -> libc::c_int {
-    libc::POSIX_SPAWN_SETPGROUP | libc::POSIX_SPAWN_SETSIGDEF | libc::POSIX_SPAWN_SETSIGMASK
+    libc::POSIX_SPAWN_SETPGROUP as libc::c_int
+        | libc::POSIX_SPAWN_SETSIGDEF as libc::c_int
+        | libc::POSIX_SPAWN_SETSIGMASK as libc::c_int
 }
 
 /// `posix_spawn` functions return an errno instead of setting it.

@@ -2414,8 +2414,6 @@ checksum = "aa9a19cbb55df58761df49b23516a86d432839add4af60fc256da840f66ed35b"
 [[package]]
 name = "fork"
 version = "0.11.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9b8b9dc1312e1668be5ffa350e3c0adc9b501b2eeebb1b31206477240cc96554"
 dependencies = [
  "libc",
 ]
