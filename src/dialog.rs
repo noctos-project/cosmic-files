@@ -268,7 +268,12 @@ impl<M: Send + 'static> Dialog<M> {
             ..Default::default()
         };
 
-        #[cfg(target_os = "linux")]
+        #[cfg(all(
+            unix,
+            not(target_vendor = "apple"),
+            not(target_os = "android"),
+            not(target_os = "redox")
+        ))]
         {
             settings.platform_specific.application_id = dialog_settings.app_id;
         }

@@ -3037,7 +3037,12 @@ impl Application for App {
                     ..Default::default()
                 };
 
-                #[cfg(target_os = "linux")]
+                #[cfg(all(
+                    unix,
+                    not(target_vendor = "apple"),
+                    not(target_os = "android"),
+                    not(target_os = "redox")
+                ))]
                 {
                     // Use the dialog ID to make it float
                     settings.platform_specific.application_id =
@@ -3065,7 +3070,12 @@ impl Application for App {
                             ..Default::default()
                         };
 
-                        #[cfg(target_os = "linux")]
+                        #[cfg(all(
+                            unix,
+                            not(target_vendor = "apple"),
+                            not(target_os = "android"),
+                            not(target_os = "redox")
+                        ))]
                         {
                             // Use the dialog ID to make it float
                             settings.platform_specific.application_id =
@@ -4184,7 +4194,12 @@ impl Application for App {
                                 ..Default::default()
                             };
 
-                            #[cfg(target_os = "linux")]
+                            #[cfg(all(
+                                unix,
+                                not(target_vendor = "apple"),
+                                not(target_os = "android"),
+                                not(target_os = "redox")
+                            ))]
                             {
                                 // Use the dialog ID to make it float
                                 settings.platform_specific.application_id =
@@ -4763,9 +4778,10 @@ impl Application for App {
                             for path in &*recently_trashed {
                                 for item in &items {
                                     if let ItemMetadata::Trash { ref entry, .. } = item.metadata
-                                        && &entry.original_path == path {
-                                            paths.push(entry.clone());
-                                        }
+                                        && &entry.original_path == path
+                                    {
+                                        paths.push(entry.clone());
+                                    }
                                 }
                             }
                         }
